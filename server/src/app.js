@@ -14,7 +14,9 @@ import  "./config/passport.js"
 //dirname
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
+const whitelist_urls = WHITELIST_URLS
+  ? WHITELIST_URLS.replace(/[\[\]\s]/g, "").split(",")
+  : [];
 const app = express();
 
 app.use(
@@ -34,7 +36,7 @@ app.use(
 );
 app.use(cors({
      origin:(origin,callback)=>{
-          if(!origin || WHITELIST_URLS.includes(origin) || WHITELIST_URLS.length === 0){
+          if(!origin || whitelist_urls.includes(origin) || whitelist_urls.length === 0){
                callback(null,true)
           }else{
                callback(new Error("Not allowed by CORS"))
