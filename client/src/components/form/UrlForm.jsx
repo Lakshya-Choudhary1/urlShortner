@@ -71,7 +71,7 @@ const UrlForm = () => {
           <button
             onClick={() =>{
                 navigator.clipboard.writeText(
-                  `http://localhost:3000/${shortUrl}`
+                  `${BASEURL}${shortUrl}`
                 )
                 setCopySuccess(true);
                 setTimeout(() => setCopySuccess(false), 2000); 
