@@ -116,12 +116,14 @@ app.get("/:shortUrl", async (req, res) => {
 
 
 
-if(MODE === "production" || true){
-     app.use(express.static(path.join(__dirname,"../public")))
-     // For any route that doesn't match the above, serve the index.html file
-     app.get("/",(req, res) => {
-          return res.sendFile(path.join(__dirname,"../public/index.html"));
-     })
+if(MODE == "production"){
+     const publicPath = path.join(__dirname, "..", "public");
+     
+       app.use(express.static(publicPath));
+     
+       app.get("/",(req, res) => {
+         res.sendFile(path.join(publicPath, "index.html"));
+       });
 }
 
 
