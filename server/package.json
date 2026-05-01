@@ -4,9 +4,34 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "npm install && npm install --prefix ../client && npm run build --prefix ../client",
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "production": "npm install && npm install --prefix ../client && npm run build --prefix ../client && npm start"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cloudinary": "^2.10.0",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.1",
+    "express": "^5.2.1",
+    "express-session": "^1.19.0",
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.4.1",
+    "morgan": "^1.10.1",
+    "nanoid": "^5.1.9",
+    "nodemailer": "^8.0.4",
+    "nodemon": "^3.1.14",
+    "passport": "^0.7.0",
+    "passport-google-oauth20": "^2.0.0",
+    "path": "^0.12.7",
+    "socket.io": "^4.8.3",
+    "url": "^0.11.4"
+  }
 }
