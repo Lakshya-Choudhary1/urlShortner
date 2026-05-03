@@ -1,7 +1,9 @@
+
 import useUserStore from '../store/useUserStore.js';
 import React, { useState } from 'react';
 
 const EmailVerification = () => {
+  const {resendEmailVerificationToken} = useUserStore();
   const [otp, setOtp] = useState(['', '', '', '']);
   const {emailVerify}= useUserStore();
 
@@ -35,8 +37,12 @@ const EmailVerification = () => {
     emailVerify(fullOtp);
   };
 
+  const handleResend = async()=>{
+    await resendEmailVerificationToken();
+  } 
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 px-4">
       <div className="bg-white shadow-lg rounded-2xl p-8 w-full max-w-md text-center">
         <h1 className="text-2xl font-bold mb-3">Email Verification</h1>
 
@@ -65,6 +71,23 @@ const EmailVerification = () => {
         >
           Verify OTP
         </button>
+        
+      </div>
+
+      {/* handle otp resent */}
+      <div className="flex items-center justify-center gap-3 mt-4">
+         <span className="text-gray-500 text-sm">
+            Didn’t receive the OTP?
+          </span>
+
+          <button
+            onClick={handleResend}
+              className="px-4 py-2 rounded-lg bg-blue-600 text-white text-sm font-medium 
+               hover:bg-blue-700 transition-all duration-300 shadow-md 
+               hover:shadow-lg active:scale-95"
+            >
+                Resend OTP
+          </button>
       </div>
     </div>
   );

@@ -14,12 +14,13 @@ import ResetPassword from './pages/ResetPassword.jsx';
 const AuthenticatedRoute = ({user,children}) => {
   if(user && user.emailVerified) return children;
   if(!user) return <Navigate to={"/login"} replace />;
-  if(!user.emailVerified) return <Navigate to={"/emailVerification"} />
+  if(user && !user.emailVerified) return <Navigate to={"/emailVerification"} />
 };
 
 const RedirectAuthenticatedRoute = ({user, children}) => {
   if(user && user.emailVerified) return <Navigate to={"/dashboard"} />
   if(user && !user.emailVerified) return <Navigate to={"/emailVerification"} />
+
   return children;
 }
 
@@ -57,9 +58,9 @@ const App = () => {
         </RedirectAuthenticatedRoute>
       } />
       <Route path='/emailVerification' element={
-        <RedirectAuthenticatedRoute user={user}>
+        <AuthenticatedRoute user={user}>
           <EmailVerification/>
-        </RedirectAuthenticatedRoute>
+        </AuthenticatedRoute>
         } />
       <Route path='/forgotPassword' element={<ForgotPassword/>} />
       <Route path='/resetPassword/:resetPasswordToken' element={<ResetPassword/>} />

@@ -118,7 +118,7 @@ app.get("/:shortUrl", async (req, res,next) => {
 });
 
 // production frontend
-if (MODE === "production" || true) {
+if (MODE === "production") {
   const publicPath = path.join(__dirname, "..", "public");
 
   app.use(express.static(publicPath));
