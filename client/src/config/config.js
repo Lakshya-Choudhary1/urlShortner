@@ -1,2 +1,2 @@
 
-export const BASEURL  =  import.meta.env.MODE == "development" ? "http://localhost:3000" : "";
+export const BASEURL  =  import.meta.env.MODE == "development" ? "http://localhost:3000" : "https://urlshortner-tav4.onrender.com";
