@@ -87,7 +87,7 @@ app.get("/test",(req,res)=>{
 
 
 //hanlde redirect to original url from short url
-app.get("/:shortUrl", async (req, res) => {
+app.get("/:shortUrl", async (req, res,next) => {
   try {
     const { shortUrl } = req.params;
 
@@ -105,7 +105,7 @@ app.get("/:shortUrl", async (req, res) => {
     );
 
     if (!urlData) {
-      return res.status(404).json({ error: "Invalid or expired URL" });
+      return next()
     }
 
 
@@ -117,16 +117,15 @@ app.get("/:shortUrl", async (req, res) => {
   }
 });
 
+// production frontend
+if (MODE === "production" || true) {
+  const publicPath = path.join(__dirname, "..", "public");
 
-if(MODE == "production"){
-     const publicPath = path.join(__dirname, "..", "public");
-     
-       app.use(express.static(publicPath));
-     
-       app.use((req, res) => {
-        return res.status(200).sendFile(path.join(publicPath, "index.html"));
-       });
+  app.use(express.static(publicPath));
+
+  app.get(/.*/, (req, res) => {
+  res.sendFile(path.join(publicPath, "index.html"));
+});
 }
-
 
 export {app};
