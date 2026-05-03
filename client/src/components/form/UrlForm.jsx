@@ -72,7 +72,7 @@ const UrlForm = () => {
           <button
             onClick={() =>{
                 navigator.clipboard.writeText(
-                  `${BASEURL}${shortUrl}`
+                  `${BASEURL}/${shortUrl}`
                 )
                 setCopySuccess(true);
                 setTimeout(() => setCopySuccess(false), 2000); 
