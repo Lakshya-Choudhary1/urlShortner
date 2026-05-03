@@ -32,6 +32,7 @@ const UrlForm = () => {
       <form onSubmit={handleSubmit} className="flex flex-col gap-3">
         
         <input
+          required
           value={url}
           onChange={(e) => setURL(e.target.value)}
           type="text"
@@ -58,7 +59,7 @@ const UrlForm = () => {
         <div className="w-full bg-gray-50 border rounded-lg p-3 flex items-center justify-between gap-2">
           
           <a
-            href={`${BASEURL}${shortUrl}`}
+            href={`${BASEURL}/${shortUrl}`}
             target="_blank"
             rel="noopener noreferrer"
             className="text-blue-600 hover:underline flex items-center gap-2 text-sm break-all"

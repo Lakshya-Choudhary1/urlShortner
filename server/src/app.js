@@ -14,9 +14,6 @@ import  "./config/passport.js"
 //dirname
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const whitelist_urls = WHITELIST_URLS
-  ? WHITELIST_URLS.replace(/[\[\]\s]/g, "").split(",")
-  : [];
 const app = express();
 
 app.use(
@@ -34,9 +31,10 @@ app.use(
     },
   })
 );
+
 app.use(cors({
      origin:(origin,callback)=>{
-          if(!origin || whitelist_urls.includes(origin) || whitelist_urls.length === 0){
+          if(!origin || WHITELIST_URLS.includes(origin) || WHITELIST_URLS.length === 0){
                callback(null,true)
           }else{
                callback(new Error("Not allowed by CORS"))
@@ -51,7 +49,7 @@ app.use(cookieParser());
 app.use(session({
   secret:SESSION_SECRET_KEY,
   resave:false,
-  saveUninitialized:true,
+  saveUninitialized:false,
   proxy:true,
   cookie:{
     maxAge: 1000*60*60*24*7,
@@ -67,6 +65,7 @@ app.use(passport.session())
 //Routes
 app.use("/api/v1",mainRoute);
 
+
 //google oauth 
 app.get(
      "/oauth/google",
@@ -75,7 +74,8 @@ app.get(
 //google oauth redirect
 app.get('/oauth/google/redirect',
      passport.authenticate("google",{
-          successRedirect: "/",
+          session:true,
+          successRedirect: "http://localhost:5173/dashboard",
           failureRedirect: "/"
      }
 ));
@@ -84,6 +84,7 @@ app.get('/oauth/google/redirect',
 app.get("/test",(req,res)=>{ 
      res.json({message:"Hello World"});
 });
+
 
 //hanlde redirect to original url from short url
 app.get("/:shortUrl", async (req, res) => {
@@ -115,7 +116,6 @@ app.get("/:shortUrl", async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
-
 
 
 if(MODE == "production"){

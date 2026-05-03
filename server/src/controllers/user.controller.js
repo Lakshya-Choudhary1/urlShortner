@@ -1,5 +1,5 @@
 import userModel from "../models/user.model.js";
-import {JWT_TOKEN_NAME,BCRYPT_SALT_ROUND} from "../config/config.js"
+import {JWT_TOKEN_NAME,BCRYPT_SALT_ROUND,CLIENT_URI} from "../config/config.js"
 import {createTokenAndSetCookie} from "../utils/createTokenAndSetCookie.js"
 import createOTP from "../utils/createOTP.js";
 import * as bcrypt from "bcrypt";
@@ -58,11 +58,8 @@ export const signupUser = async (req, res) => {
     await createTokenAndSetCookie(res, newUser._id);
 
     // Remove password before sending response
-    const userResponse = {
-      _id: newUser._id,
-      fullName: newUser.fullName,
-      email: newUser.email,
-    };
+    const userResponse = user.toObject();
+    delete userResponse.password();
 
     return res.status(201).json({
       message: "Signup successful",
@@ -131,11 +128,8 @@ export const loginUser = async (req, res) => {
     await createTokenAndSetCookie(res, user._id);
 
     // Remove password before sending response
-    const userResponse = {
-      _id: user._id,
-      fullName: user.fullName,
-      email: user.email,
-    };
+    const userResponse = user.toObject();
+    delete userResponse.password;
 
 
     return res.status(200).json({
@@ -209,7 +203,7 @@ export const verifyEmail = async(req,res) => {
       return res.status(400).json({message:"Missing OTP. Cannot Verify Email."})
     }
   
-    const user = await userModel.findOne({emailVerificationToken});
+    const user = await userModel.findOne({emailVerificationToken}).select("-password");
     if(!user || user.emailVerificationTokenExpiry < Date.now()){
       return res.status(400).json({message:"Invalid OTP. Cannot Verify Email."})
     } 
@@ -218,7 +212,8 @@ export const verifyEmail = async(req,res) => {
     user.emailVerificationToken = null;
     user.emailVerificationTokenExpiry = null;
     await user.save();
-    return res.status(200).json({message:"Email Verified Successfully."})
+
+    return res.status(200).json({message:"Email Verified Successfully.",user});
 
   } catch(err){
     console.log(err);
@@ -238,7 +233,7 @@ export const resendEmailVerificationOTP = async(req,res) => {
     }
 
     if(user.isEmailVerified){
-      return res.status(400).json({message:"Email Already Verified."})
+      return res.status(400).json({message:"Email Already Verified.",ack:true})
     }
 
     if(user.emailVerificationToken && user.emailVerificationTokenExpiry > Date.now()){ 
@@ -253,7 +248,7 @@ export const resendEmailVerificationOTP = async(req,res) => {
 
     await sendEmailVerification(user.email,emailVerificationToken);
 
-    return res.status(200).json({message:"OTP Resent Successfully."})
+    return res.status(200).json({message:"OTP Resent Successfully.",ack:true})
 
   }
   catch(err){
@@ -280,7 +275,7 @@ export const forgotPassword = async(req,res) => {
     user.resetPasswordTokenExpiry = Date.now() + 3600000; // 1 hour expiry
     await user.save();
 
-    await sendforgotPasswordLinkEmail(email,`http://localhost:5173/reset-password/${resetPasswordToken}`);
+    await sendforgotPasswordLinkEmail(email,`${CLIENT_URI}/${resetPasswordToken}`);
 
     return res.status(200).json({message:"Forgot Password Processed. Please Check Your Email For Reset Instructions."})
   }catch(err){
@@ -321,7 +316,7 @@ export const resetPassword = async(req,res) => {
     user.resetPasswordTokenExpiry = null;
     await user.save();
 
-    return res.status(200).json({message:"Password Reset Successfully.",newPassword:newPassword})
+    return res.status(200).json({message:"Password Reset Successfully."})
   }catch(err){
     console.log(err);
     return res.status(500).json({message:"Server Error Due To Reset Password."})

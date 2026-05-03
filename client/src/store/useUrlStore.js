@@ -10,7 +10,6 @@ export const useUrlStore = create((set,get) => ({
     submitUrl: async () => {
         try {
             const response = await axiosInstance.post('/url/create', { originalUrl: get().originalUrl });
-            console.log(response.data)
             set({ shortUrl: response.data.newUrl.shortUrl });
             toast.success("URL shortened successfully!");
         } catch (error) {
