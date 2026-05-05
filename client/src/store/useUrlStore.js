@@ -1,15 +1,20 @@
 import {create} from 'zustand'
 import axiosInstance from '../utils/axios.js';
 import { toast } from 'react-hot-toast';
-
-export const useUrlStore = create((set,get) => ({
+ const useUrlStore = create((set,get) => ({
     originalUrl: "",
     shortUrl: "",
+    allUrl:[],
     setUrl: (newUrl) => set({originalUrl: newUrl}),
-
-    submitUrl: async () => {
+    setAllUrl: (updatedUrl) => set({allUrl:updatedUrl}),
+    submitUrl: async (customUrl,id) => {
         try {
-            const response = await axiosInstance.post('/url/create', { originalUrl: get().originalUrl });
+            const response = await axiosInstance.post('/url/create',
+              {
+                originalUrl: get().originalUrl,
+                uniqueShortUrl: customUrl ? customUrl : null,
+                userId : id ? id : null
+            });
             set({ shortUrl: response.data.newUrl.shortUrl });
             toast.success("URL shortened successfully!");
         } catch (error) {
@@ -19,5 +24,22 @@ export const useUrlStore = create((set,get) => ({
             set({ originalUrl: "" });
         }
     }
+    ,
+    getAllUrl: async() =>{
+        try {
+            const response = await axiosInstance.get('/url/all');
+            set({ allUrl: response.data.urls });
+        } catch (error) {
+            console.error("Error submitting URL:", error);
+        }
+    },
+    toggleUrlStatus: async(urlId) =>{
+        try {
+            await axiosInstance.get(`/url/toggleUrlStatus/${urlId}`);
+        } catch (error) {
+            console.error("Error submitting URL:", error);
+        }
+    }
 }))  
 
+export default useUrlStore;

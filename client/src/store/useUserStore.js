@@ -21,10 +21,10 @@ const useUserStore = create((set,get) => ({
           }
      }
 
-     ,logout: async() =>{
+     ,
+     logout: async() =>{
           try{
                const res =   await axiosInstance.get("/user/logout");
-               console.log(res.data);
           }catch(err){
                console.log("ERROR:",err);
                toast.success("Cannot Logout Try Again Later!");

@@ -3,20 +3,22 @@ import { Button } from "../ui/button.jsx";
 import  useUrlStore  from "../../store/useUrlStore.js";
 import { LinkIcon } from "lucide-react";
 import { BASEURL } from "../../config/config.js";
+import useUserStore from "../../store/useUserStore.js";
 
-const UrlForm = () => {
+const Form = () => {
   const { setUrl, submitUrl, shortUrl } = useUrlStore();
+  const {user} = useUserStore();
   const [url, setURL] = useState("");
+  const [customUrl, setCustomUrl] = useState("");
   const [copySuccess, setCopySuccess] = useState(false);
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
     if(!url || !url.trim()) {
       alert("Please enter a URL");
       return;
     }
     setUrl(url);
-    await submitUrl();
+    await submitUrl(customUrl,user._id);
   };
 
   return (
@@ -39,7 +41,15 @@ const UrlForm = () => {
           placeholder="https://example.com/very-long-url"
           className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
         />
-        
+
+        <input
+          
+          value={customUrl}
+          onChange={(e) => setCustomUrl(e.target.value)}
+          type="text"
+          placeholder="custom url code"
+          className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+        />
 
         {/* Button with hover effect */}
         <Button
@@ -89,4 +99,4 @@ const UrlForm = () => {
   );
 };
 
-export default UrlForm;
+export default Form;
