@@ -4,7 +4,7 @@ import userModel from "../models/user.model.js";
 import {GOOGLE_CLIENT_ID,GOOGLE_CLIENT_SECRET,MODE} from "./config.js"
 
 
-const uri = MODE === 'developnment' ?  "/oauth/google/redirect" :"https://urlshortner-tav4.onrender.com/oauth/google/redirect";
+const uri = MODE == 'development' ?  "/oauth/google/redirect" :"/oauth/google/redirect";
 
 passport.use(new GoogleStrategy({
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
@@ -18,12 +18,13 @@ passport.use(new GoogleStrategy({
 
         if (!user) {
             user = await userModel.create({
-                name: profile.displayName,
+                fullName: profile.displayName,
                 email,
                 profilePic: profile.photos[0].value,
                 emailVerified: true,
                 password:`google${profile.id}`
             });
+            console.log(profile.id)
         }
 
         done(null, user); // attach user to session

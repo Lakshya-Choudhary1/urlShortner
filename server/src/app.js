@@ -72,10 +72,11 @@ app.get(
      passport.authenticate("google", { scope: ["profile", "email"] })
 );
 //google oauth redirect
+const url = MODE === 'production' ? "/dashboard" : "http://localhost:5173/dashboard"
 app.get('/oauth/google/redirect',
      passport.authenticate("google",{
           session:true,
-          successRedirect: "http://localhost:5173/dashboard",
+          successRedirect: url,
           failureRedirect: "/"
      }
 ));

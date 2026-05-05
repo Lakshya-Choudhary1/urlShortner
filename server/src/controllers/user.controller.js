@@ -275,7 +275,7 @@ export const forgotPassword = async(req,res) => {
     user.resetPasswordTokenExpiry = Date.now() + 3600000; // 1 hour expiry
     await user.save();
 
-    await sendforgotPasswordLinkEmail(email,`${CLIENT_URI}/${resetPasswordToken}`);
+    await sendforgotPasswordLinkEmail(email,`${CLIENT_URI}/resetPassword/${resetPasswordToken}`);
 
     return res.status(200).json({message:"Forgot Password Processed. Please Check Your Email For Reset Instructions."})
   }catch(err){
