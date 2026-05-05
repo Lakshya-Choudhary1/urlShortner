@@ -4,7 +4,7 @@ import userModel from "../models/user.model.js";
 import {GOOGLE_CLIENT_ID,GOOGLE_CLIENT_SECRET,MODE} from "./config.js"
 
 
-const uri = MODE == 'development' ?  "/oauth/google/redirect" :"/oauth/google/redirect";
+const uri = MODE == 'development' ?  "/oauth/google/redirect" :"https://urlshortner-tav4.onrender.com/oauth/google/redirect";
 
 passport.use(new GoogleStrategy({
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
