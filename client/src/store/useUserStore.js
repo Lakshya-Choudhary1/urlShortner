@@ -5,11 +5,12 @@ import { toast } from 'react-hot-toast';
 
 const useUserStore = create((set,get) => ({
      user: null,
+     isChecking: false,
      setUser: (userData) => set({user: userData}),
 
      signup : async({fullName,email,password})=>{
           try{
-               const res = axiosInstance.post('/user/signup',{fullName,email,password});
+               const res = await axiosInstance.post('/user/signup',{fullName,email,password});
                if(res.data.user){
                     toast.success("Otp Sent To : ",email);
                     set({user:res.data.user});
@@ -50,14 +51,16 @@ const useUserStore = create((set,get) => ({
           }
      },
      checkAuth: async () => {
+          set({isChecking:true})
           try {
                const res = await axiosInstance.get("/user/checkAuth");
-               set({ user: res.data.user });
+               set({ user: res.data.user, isChecking: false });
                if(get().user){
                     toast.success('welcome user')
                }
           } catch (err) {
                console.log("ERROR:", err);
+               set({ user: null, isChecking: false });
           }
      },
      emailVerify : async(emailVerificationToken)=>{

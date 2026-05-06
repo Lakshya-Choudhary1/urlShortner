@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import { BASEURL } from "@/config/config.js";
 import useUserStore from "../store/useUserStore.js";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Signup = () => {
-
-  const {signup} = useUserStore();
+  const { signup } = useUserStore();
 
   const [formData, setFormData] = useState({
     fullName: "",
@@ -22,37 +21,62 @@ const Signup = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
-    // signup API call here
+
+    if (formData.password.length < 6) {
+      alert("Password must be at least 6 characters");
+      return;
+    }
+
     signup(formData);
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="bg-white shadow-xl rounded-xl p-8 w-full max-w-md">
-        <h1 className="text-3xl font-bold text-center mb-6">Signup</h1>
+    <div
+      className="min-h-screen flex items-center justify-center px-4
+      bg-slate-900 
+      bg-[linear-gradient(#1e293b_1px,transparent_1px),linear-gradient(90deg,#1e293b_1px,transparent_1px)]
+      bg-size-[15px_15px]"
+    >
+      <div
+        className="w-full max-w-md 
+        bg-slate-800/60 backdrop-blur-lg 
+        border border-slate-700 
+        shadow-xl rounded-2xl p-8 text-slate-200"
+      >
+        <h1 className="text-3xl font-bold text-center mb-6 text-slate-100 tracking-wide">
+          Create Account
+        </h1>
 
         <form onSubmit={handleSubmit} className="space-y-4">
+          {/* Name */}
           <input
             type="text"
             name="fullName"
             placeholder="Full Name"
             value={formData.fullName}
             onChange={handleChange}
-            className="w-full border rounded-lg p-3 outline-none focus:ring-2 focus:ring-blue-500"
             required
+            className="w-full bg-slate-900/60 border border-slate-700 
+            rounded-lg px-4 py-3 text-slate-200 placeholder-slate-500
+            focus:outline-none focus:ring-2 focus:ring-blue-500/50 
+            focus:border-blue-500 transition"
           />
 
+          {/* Email */}
           <input
             type="email"
             name="email"
             placeholder="Email"
             value={formData.email}
             onChange={handleChange}
-            className="w-full border rounded-lg p-3 outline-none focus:ring-2 focus:ring-blue-500"
             required
+            className="w-full bg-slate-900/60 border border-slate-700 
+            rounded-lg px-4 py-3 text-slate-200 placeholder-slate-500
+            focus:outline-none focus:ring-2 focus:ring-blue-500/50 
+            focus:border-blue-500 transition"
           />
 
+          {/* Password */}
           <input
             type="password"
             name="password"
@@ -60,39 +84,51 @@ const Signup = () => {
             value={formData.password}
             onChange={handleChange}
             minLength={6}
-            className="w-full border rounded-lg p-3 outline-none focus:ring-2 focus:ring-blue-500"
             required
+            className="w-full bg-slate-900/60 border border-slate-700 
+            rounded-lg px-4 py-3 text-slate-200 placeholder-slate-500
+            focus:outline-none focus:ring-2 focus:ring-blue-500/50 
+            focus:border-blue-500 transition"
           />
 
+          {/* Signup Button */}
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white py-3 rounded-lg hover:opacity-90"
+            className="w-full bg-blue-600/80 hover:bg-blue-500 
+            text-white py-3 rounded-lg transition"
           >
-            Signup
+            Sign Up
           </button>
 
-          <div className="flex gap-3 justify-center "> 
-            <p className="text-md text-slate-700">Already have an account?</p>
-            <Link  to={"/login"} className="text-md text-blue-700">Login</Link>
+          {/* Login Link */}
+          <div className="flex gap-2 justify-center text-sm">
+            <p className="text-slate-400">Already have an account?</p>
+            <Link to="/login" className="text-blue-400 hover:underline">
+              Login
+            </Link>
           </div>
         </form>
 
-        <div className="my-5 flex items-center">
-          <div className="flex-1 border-t"></div>
-          <span className="px-3 text-gray-500 text-sm">OR</span>
-          <div className="flex-1 border-t"></div>
+        {/* Divider */}
+        <div className="my-6 flex items-center">
+          <div className="flex-1 border-t border-slate-700"></div>
+          <span className="px-3 text-slate-500 text-sm">OR</span>
+          <div className="flex-1 border-t border-slate-700"></div>
         </div>
 
+        {/* Google OAuth */}
         <a
           href={`${BASEURL}/oauth/google`}
-          className="w-full border rounded-lg py-3 flex items-center justify-center gap-2 hover:bg-gray-100"
+          className="w-full border border-slate-700 
+          bg-slate-900/60 hover:bg-slate-800/70 
+          rounded-lg py-3 flex items-center justify-center gap-2 transition"
         >
           <img
             src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
             alt="Google"
             className="w-5 h-5"
           />
-          Continue with Google
+          <span className="text-slate-200">Continue with Google</span>
         </a>
       </div>
     </div>
