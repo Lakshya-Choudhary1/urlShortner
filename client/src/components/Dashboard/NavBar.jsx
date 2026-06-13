@@ -3,7 +3,7 @@ import {
   LogOutIcon,
   CircleUserRound,
 } from "lucide-react";
-import useUserStore from "@/store/useUserStore.js";
+import useUserStore from "../../store/useUserStore.js";
 
 const Navbar = () => {
   const { logout, user } = useUserStore();
