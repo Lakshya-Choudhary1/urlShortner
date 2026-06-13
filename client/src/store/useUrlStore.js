@@ -7,6 +7,19 @@ import { toast } from 'react-hot-toast';
     allUrl:[],
     setUrl: (newUrl) => set({originalUrl: newUrl}),
     setAllUrl: (updatedUrl) => set({allUrl:updatedUrl}),
+
+    deleteUrl: async (urlId) => {
+        try {
+            await axiosInstance.delete(`/url/delete/${urlId}`);
+            set((state) => ({
+                allUrl: state.allUrl.filter((url) => url._id !== urlId),
+            }));
+            toast.success("URL deleted successfully!");
+        } catch (error) {
+            console.error("Error deleting URL:", error);
+            toast.error("Failed to delete URL. Please try again.");
+        }
+    },
     submitUrl: async (customUrl,id) => {
         try {
             const response = await axiosInstance.post('/url/create',
