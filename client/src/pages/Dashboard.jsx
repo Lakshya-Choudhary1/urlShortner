@@ -6,7 +6,7 @@ import QRModal from "../components/Dashboard/QRModal.jsx";
 import EmptyState from "../components/Dashboard/EmptyState.jsx";
 import Loading from "../components/Dashboard/Loading.jsx";
 import Form from "../components/Dashboard/Form.jsx";
-import Navbar from "../components/Dashboard/Navbar.jsx";
+import NavBar from "../components/Dashboard/NavBar.jsx";
 
 const Dashboard = () => {
   const { getAllUrl, toggleUrlStatus, allUrl, setAllUrl ,deleteUrl } =
@@ -69,7 +69,7 @@ const Dashboard = () => {
       bg-size-[15px_15px]
       text-slate-200"
     >
-      <Navbar />
+      <NavBar />
 
       <div className="w-full flex justify-center items-center px-4 mt-6">
         <Form />

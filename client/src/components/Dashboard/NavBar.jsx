@@ -5,7 +5,7 @@ import {
 } from "lucide-react";
 import useUserStore from "../../store/useUserStore.js";
 
-const Navbar = () => {
+const NavBar = () => {
   const { logout, user } = useUserStore();
 
   return (
@@ -36,5 +36,5 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default NavBar;
 
