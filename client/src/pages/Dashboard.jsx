@@ -6,7 +6,7 @@ import QRModal from "../components/Dashboard/QRModal.jsx";
 import EmptyState from "../components/Dashboard/EmptyState.jsx";
 import Loading from "../components/Dashboard/Loading.jsx";
 import Form from "../components/Dashboard/Form.jsx";
-import NavBar from "../components/Dashboard/NavBar.jsx";
+import NavBar from "../components/Dashboard/Navbar.jsx";
 
 const Dashboard = () => {
   const { getAllUrl, toggleUrlStatus, allUrl, setAllUrl ,deleteUrl } =
