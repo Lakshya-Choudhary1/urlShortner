@@ -25,7 +25,7 @@ app.use(
       fontSrc: ["'self'", "https://fonts.gstatic.com", "data:"],
       imgSrc: ["'self'", "data:", "blob:"],
       connectSrc: ["'self'", "http://localhost:3000", "http://localhost:5173", "ws://localhost:5173","https://api.cloudinary.com",
-          "https://res.cloudinary.com"],
+          "https://res.cloudinary.com","https://lh3.googleusercontent.com"],
       objectSrc: ["'none'"],
       baseUri: ["'self'"],
       frameAncestors: ["'none'"],

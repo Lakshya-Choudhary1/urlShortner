@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   LogOutIcon,
   CircleUserRound,
@@ -7,6 +7,12 @@ import useUserStore from "../../store/useUserStore.js";
 
 const NavBar = () => {
   const { logout, user } = useUserStore();
+
+  useEffect(()=>{
+    if(user){
+      console.log(user);
+    }
+  },[])
 
   return (
     <div className="w-full px-4 md:px-6 py-3 flex justify-center">
