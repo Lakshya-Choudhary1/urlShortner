@@ -24,24 +24,22 @@ const Form = () => {
   };
 
   return (
-    <div className="w-full max-w-md 
+    <div
+      className="w-full max-w-md 
       bg-slate-800/60 backdrop-blur-lg 
       border border-slate-700 
-      rounded-2xl shadow-xl p-6 flex flex-col gap-4 text-slate-200">
-
+      rounded-2xl shadow-xl p-6 flex flex-col gap-4 text-slate-200"
+    >
       {/* Heading */}
       <div className="text-center">
         <h2 className="text-2xl font-bold tracking-wide text-slate-100">
           URL Shortener
         </h2>
-        <p className="text-sm text-slate-400">
-          Paste your long URL below
-        </p>
+        <p className="text-sm text-slate-400">Paste your long URL below</p>
       </div>
 
       {/* Form */}
       <form onSubmit={handleSubmit} className="flex flex-col gap-3">
-
         <input
           required
           value={url}
@@ -77,9 +75,10 @@ const Form = () => {
 
       {/* Result */}
       {shortUrl && (
-        <div className="w-full bg-slate-900/60 border border-slate-700 
-          rounded-lg p-3 flex items-center justify-between gap-2">
-
+        <div
+          className="w-full bg-slate-900/60 border border-slate-700 
+          rounded-lg p-3 flex items-center justify-between gap-2"
+        >
           <a
             href={`${BASEURL}/${shortUrl}`}
             target="_blank"

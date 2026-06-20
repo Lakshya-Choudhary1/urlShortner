@@ -9,6 +9,7 @@ import PageNotFound from "./pages/PageNotFound.jsx";
 import EmailVerification from "./pages/EmailVerification.jsx";
 import ForgotPassword from "./pages/ForgotPassword.jsx";
 import ResetPassword from "./pages/ResetPassword.jsx";
+import Loading from "./components/Dashboard/Loading.jsx";
 
 import useUserStore from "./store/useUserStore.js";
 
@@ -42,9 +43,7 @@ const App = () => {
   // 🚀 Prevent flicker
   if (isChecking) {
     return (
-      <div className="h-screen flex items-center justify-center text-lg">
-        Loading...
-      </div>
+      <Loading />
     );
   }
 

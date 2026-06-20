@@ -1,18 +1,9 @@
 import React, { useEffect } from "react";
-import {
-  LogOutIcon,
-  CircleUserRound,
-} from "lucide-react";
+import { LogOutIcon, CircleUserRound } from "lucide-react";
 import useUserStore from "../../store/useUserStore.js";
 
 const NavBar = () => {
   const { logout, user } = useUserStore();
-
-  useEffect(()=>{
-    if(user){
-      console.log(user);
-    }
-  },[])
 
   return (
     <div className="w-full px-4 md:px-6 py-3 flex justify-center">
@@ -21,10 +12,7 @@ const NavBar = () => {
         bg-slate-800/60 backdrop-blur-md border
         border-slate-700 rounded-2xl px-4 py-3"
       >
-        <button
-          onClick={logout}
-          className="p-2 hover:bg-slate-700 rounded-lg"
-        >
+        <button onClick={logout} className="p-2 hover:bg-slate-700 rounded-lg">
           <LogOutIcon className="size-5" />
         </button>
 
@@ -43,4 +31,3 @@ const NavBar = () => {
 };
 
 export default NavBar;
-

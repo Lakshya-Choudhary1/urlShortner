@@ -9,9 +9,7 @@ const EmptyState = () => {
     >
       <LinkIcon size={48} />
 
-      <p className="mt-4 text-lg">
-        No shortened URLs yet
-      </p>
+      <p className="mt-4 text-lg">No shortened URLs yet</p>
     </div>
   );
 };
